@@ -1,15 +1,25 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 ## Loading and preprocessing the data ##
-```{r echo = TRUE}
+
+```r
 # Load libraries.
 library(dplyr, quietly = TRUE, verbose = FALSE, warn.conflicts = FALSE)
+```
+
+```
+## Warning: package 'dplyr' was built under R version 3.2.3
+```
+
+```r
 library(ggplot2, quietly = TRUE, verbose = FALSE, warn.conflicts = FALSE)
+```
+
+```
+## Warning: package 'ggplot2' was built under R version 3.2.3
+```
+
+```r
 library(ggthemes, quietly = TRUE, verbose = FALSE, warn.conflicts = FALSE)
 
 # Read the data from CSV file.
@@ -23,13 +33,36 @@ activitydata <- select(activitydata, date, interval, steps)
 
 # Structure of the data.
 str(activitydata)
+```
 
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	17568 obs. of  3 variables:
+##  $ date    : Date, format: "2012-10-01" "2012-10-01" ...
+##  $ interval: int  0 5 10 15 20 25 30 35 40 45 ...
+##  $ steps   : int  NA NA NA NA NA NA NA NA NA NA ...
+```
+
+```r
 # Head of the data.
 head(activitydata)
 ```
 
+```
+## Source: local data frame [6 x 3]
+## 
+##         date interval steps
+##       (date)    (int) (int)
+## 1 2012-10-01        0    NA
+## 2 2012-10-01        5    NA
+## 3 2012-10-01       10    NA
+## 4 2012-10-01       15    NA
+## 5 2012-10-01       20    NA
+## 6 2012-10-01       25    NA
+```
+
 ## What is mean total number of steps taken per day? ##
-```{r echo = TRUE}
+
+```r
 # Remove incomplete observations.
 activitydatasubset <- activitydata[complete.cases(activitydata),]
 
@@ -73,8 +106,11 @@ p <- ggplot(data = activitydatasubset,
 print(p)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png) 
+
 ## What is the average daily activity pattern? ##
-```{r echo = TRUE}
+
+```r
 # Remove incomplete observations.
 activitydatasubset <- activitydata[complete.cases(activitydata),]
 
@@ -107,12 +143,21 @@ p <- ggplot(data = activitydatasubset,
 print(p)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png) 
+
 ## Imputing missing values ##
-```{r echo = TRUE}
+
+```r
 # Calculate the number of incomplete cases.
 incompleteCases <- nrow(activitydata) - sum(complete.cases(activitydata))
 print(incompleteCases)
+```
 
+```
+## [1] 2304
+```
+
+```r
 # Remove incomplete observations.
 activitydatasubset <- activitydata[complete.cases(activitydata),]
 
@@ -178,13 +223,16 @@ p <- ggplot(data = activitydataImputed,
 print(p)
 ```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png) 
+
 Data | Total Steps | Mean Steps | Median Steps | Comment
 -----|-------------|------------|--------------|--------
 Original | 570,608 | 10,766 | 10,765 |
 Imputed | 656,738 | 10,766 | 10,766 | Significant increase in total steps, mean is unchanged, median has increased only by 1.
 
 ## Are there differences in activity patterns between weekdays and weekends? ##
-```{r echo = TRUE}
+
+```r
 # Split out the complete and incomplete cases.
 activitydataCompleteCases <- activitydata[complete.cases(activitydata),]
 activitydataIncompletedCases <- activitydata[!complete.cases(activitydata),]
@@ -237,3 +285,5 @@ p <- ggplot(data = activitydataImputedPlusDaytype,
     
 print(p)
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png) 
